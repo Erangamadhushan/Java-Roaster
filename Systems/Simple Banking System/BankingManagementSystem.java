@@ -48,7 +48,8 @@ class ProcessControler extends Bank{
         System.out.println("2. Deposit Money");
         System.out.println("3. Withdraw Money");
         System.out.println("4. Display Account Details");
-        System.out.println("5. Exit");
+        System.out.println("5. Support & Services");
+        System.out.println("6. Exit");
         System.out.println("------------------------------------------------------");
 
     }
@@ -119,24 +120,116 @@ class ProcessControler extends Bank{
         }
     }
     public void withdrawMoneyProcess() {
+        System.out.println("Enter Account Number here :");
+        int accountNumber = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter Your PIN Number here :");
+        int pinNumber = scanner.nextInt();
+        scanner.nextLine();
 
+        //Checking Account Number and PIN Number
+        for(int i = 0; i < GlobalVariable.accountCounter; i++) {
+            if(bankAcconts[i] == accountNumber && bankPin[i] == pinNumber) {
+                System.out.println("Enter Withdraw Value here :");
+                double withdrawValue = scanner.nextDouble();
+                scanner.nextLine();
+
+                bankBalances[i] -= withdrawValue;
+                System.out.println("Withdraw Successfully");
+                return ;
+            }
+        }
+        System.out.println("Given Account and Pin Number is not match each other Try again");
+
+        System.out.println("Do you want to try again ?");
+        System.out.println("1. Yes");
+        System.out.println("2. No");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        if(choice == 1) {
+            withdrawMoneyProcess();
+        }
+        else if (choice == 2) {
+            System.out.println("Withdrawal Process is cancelled");
+            return ;
+        }
+        else {
+            System.out.println("Something went wrong");
+            return ;
+        }
     }
 
+    
     public void displayAccountDetailsProcess() {
         System.out.println("Enter Your ID Card Number here :");
         String idCardNumber = scanner.nextLine();
+        System.out.println("Enter Your Bank Account Number here :");
+        int accountNumber = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Enter Your Name here :");
         String accountHolderName = scanner.nextLine();
         System.out.println("Enter Your PIN Number here :");
         int pinNumber = scanner.nextInt();
         scanner.nextLine();
         for(int i = 0; i <= GlobalVariable.accountCounter;i++) {
-            if(userIDCardDetails[i].equalsIgnoreCase(idCardNumber) && userNameDetails[i].equalsIgnoreCase(accountHolderName) && bankPin[i] == pinNumber ) {
+            if(userIDCardDetails[i].equalsIgnoreCase(idCardNumber) && userNameDetails[i].equalsIgnoreCase(accountHolderName) && bankPin[i] == pinNumber && bankAcconts[i] == accountNumber) {
                 System.out.println("Account Holder Name : " + userNameDetails[i]);
                 System.out.println("Account ID Card Number : " + userIDCardDetails[i]);
-                System.out.println("Account PIN Number : " + bankPin[i]);
+                System.out.println("Bank Account Number : " + bankAcconts[i]);
+                System.out.println("Acount Type : " + accountType[i]);
+                System.out.println("Account Balance : " + bankBalances[i]);
                 
-                
+            }
+        }
+        return ;
+    }
+
+    //Supports and Services Center
+    public void support_services() {
+        boolean running = true;
+        while(running) {
+            System.out.println("=====> Welcome to Support and Services Center <=====");
+            System.out.println("-------------------------------------------------------");
+            System.out.println("1. About Us");
+            System.out.println("2. Contact Us");
+            System.out.println("3. FAQ");
+            System.out.println("4. Exit");
+            System.out.println("-------------------------------------------------------");
+
+            System.out.println("Enter your purpose :");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.println("===> About Us <=== ");
+                    System.out.println("We are a team of highly skilled and experienced professionals who are dedicated to providing  the best possible services to our customers.");
+                break;
+                case 2:
+                    System.out.println("===> Contact Us <=== ");
+                    System.out.println("Tel No: 0112311123");
+                    System.out.println("Email: [support@bank.com](mailto:support@bank.com)");
+                break;
+                case 3:
+                    System.out.println("===> FAQ <===");
+                    System.out.println("Q: How do I reset my password?");
+                    System.out.println("-----------------------------------------------------------");
+                    System.out.println("A: You can reset your password by clicking on the forgot password link on the login page.");
+                    System.out.println("\n");
+                    System.out.println("Q: How do I contact the bank?");
+                    System.out.println("-----------------------------------------------------------");
+                    System.out.println("A: You can contact the bank by calling our customer service number or by sending an email to our support email.");
+                    System.out.println("\n");
+                break;
+                case 4:
+
+                break;
+                case 5:
+                    System.out.println("Exit the support and services center");
+                    System.out.println("Thank You !!");
+                    running = false;
+                break;
+                default:
+                    System.out.println("Invalid choice");
             }
         }
     }
@@ -171,6 +264,13 @@ public class BankingManagementSystem {
                         break;
                         case 4:
                             systemProcessControler.displayAccountDetailsProcess();
+                        break;
+                        case 5:
+                            systemProcessControler.support_services();
+                        break;
+                        case 6:
+                            System.out.println("Exit the programme");
+                            runningSystem = false;
                         break;
                         default:
                             System.out.println("Invalid Input !!");
