@@ -16,6 +16,9 @@ public class Ass1 {
 
         int sum = firstNum + secondNum;
 
-        System.out.println("Summation of given two numbers :" + sum);;
+        System.out.println("Summation of given two numbers :" + sum);
+
+
+        scanner.close();
     }
 }
